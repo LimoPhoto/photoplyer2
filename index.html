@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全屏图片自由滚动展示</title>
+    <title>图片轮播展示</title>
     
     <!-- 引入Flickity CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     
     <style>
-        /* 设置页面主体样式，隐藏滚动条 */
+        /* 页面主体样式 */
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            min-height: 100vh;
+            justify-content: center;
             margin: 0;
+            padding: 0;
             overflow: hidden;
             background-color: #000;
-            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* 主轮播容器，设置全屏显示 */
+        /* 主轮播全屏样式 */
         .carousel-main {
             width: 100vw;
-            height: 100vh;
+            height: 80vh;
         }
 
         /* 导航轮播样式 */
@@ -38,12 +39,12 @@
         /* 轮播单元格样式 */
         .carousel-cell, .carousel-cell-nav {
             width: 100vw;
-            height: 100vh;
+            height: 80vh;
             position: relative;
             overflow: hidden;
         }
 
-        /* 主轮播中的图片样式 */
+        /* 主轮播图片样式 */
         .carousel-cell img {
             position: absolute;
             top: 50%;
@@ -51,74 +52,34 @@
             transform: translate(-50%, -50%);
             max-width: 100%;
             max-height: 100%;
-            width: auto;
-            height: auto;
             object-fit: contain;
         }
 
-        /* 导航轮播中的图片样式 */
+        /* 导航轮播中的图片 */
         .carousel-cell-nav img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
-        /* 自定义箭头样式 */
-        .flickity-button {
-            background: none !important;
-            border: none !important;
-            color: #fff !important;
-            font-size: 20px !important;
-            opacity: 0.7 !important;
-            width: 30px !important;
-            height: 30px !important;
-        }
-
-        /* 隐藏箭头在手机端显示 */
-        @media (max-width: 768px) {
-            .flickity-button {
-                display: none !important;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- 主轮播容器 -->
+    <!-- 主轮播 -->
     <div class="carousel-main">
-        <div class="carousel-cell">
-            <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
-        </div>
-        <div class="carousel-cell">
-            <img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2">
-        </div>
-        <div class="carousel-cell">
-            <img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3">
-        </div>
-        <div class="carousel-cell">
-            <img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4">
-        </div>
-        <div class="carousel-cell">
-            <img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5">
-        </div>
+        <div class="carousel-cell"><img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1"></div>
+        <div class="carousel-cell"><img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2"></div>
+        <div class="carousel-cell"><img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3"></div>
+        <div class="carousel-cell"><img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4"></div>
+        <div class="carousel-cell"><img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5"></div>
     </div>
 
     <!-- 导航轮播 -->
     <div class="carousel-nav">
-        <div class="carousel-cell-nav">
-            <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
-        </div>
-        <div class="carousel-cell-nav">
-            <img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2">
-        </div>
-        <div class="carousel-cell-nav">
-            <img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3">
-        </div>
-        <div class="carousel-cell-nav">
-            <img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4">
-        </div>
-        <div class="carousel-cell-nav">
-            <img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5">
-        </div>
+        <div class="carousel-cell-nav"><img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1"></div>
+        <div class="carousel-cell-nav"><img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2"></div>
+        <div class="carousel-cell-nav"><img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3"></div>
+        <div class="carousel-cell-nav"><img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4"></div>
+        <div class="carousel-cell-nav"><img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5"></div>
     </div>
 
     <!-- 引入Flickity JavaScript -->
@@ -126,17 +87,16 @@
     <script>
         // 初始化主轮播
         const mainCarousel = new Flickity('.carousel-main', {
+            cellAlign: 'center',
+            contain: true,
             wrapAround: true,
             freeScroll: true,
-            fullscreen: true,
-            pageDots: false,
-            prevNextButtons: true,
-            contain: false
+            pageDots: false
         });
 
-        // 初始化导航轮播，并将其配置为主轮播的导航
+        // 初始化导航轮播并关联至主轮播
         const navCarousel = new Flickity('.carousel-nav', {
-            asNavFor: '.carousel-main', // 指定主轮播
+            asNavFor: '.carousel-main',  // 关联到主轮播
             contain: true,
             pageDots: false,
             prevNextButtons: false,
