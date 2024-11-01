@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全屏图片左右滑动展示</title>
+    
+    <!-- 引入Flickity CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    
+    <style>
+        /* 设置页面主体样式，隐藏滚动条 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* 禁止页面垂直滚动 */
+            background-color: #000;
+        }
+
+        /* 轮播容器样式 */
+        .carousel {
+            width: 100vw; /* 宽度占满视口 */
+            height: 100vh; /* 高度占满视口 */
+        }
+
+        /* 轮播单元格样式，确保每张图片全屏显示 */
+        .carousel-cell {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 图片样式，确保填满整个单元格 */
+        .carousel-cell img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        /* 自定义简洁箭头样式 */
+        .flickity-button {
+            background: none !important; /* 移除背景颜色 */
+            border: none !important;
+            color: #fff !important;
+            font-size: 30px !important; /* 调整箭头大小 */
+            width: 50px !important;
+            height: 50px !important;
+            opacity: 0.7 !important;
+            transition: opacity 0.3s !important;
+        }
+
+        /* 隐藏箭头在手机端显示 */
+        @media (max-width: 768px) {
+            .flickity-button {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 轮播容器 -->
+    <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 5000, "pauseAutoPlayOnHover": false, "pageDots": false, "prevNextButtons": true, "cellAlign": "center", "contain": false }'>
+        <div class="carousel-cell">
+            <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
+        </div>
+        <div class="carousel-cell">
+            <img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2">
+        </div>
+        <div class="carousel-cell">
+            <img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3">
+        </div>
+        <div class="carousel-cell">
+            <img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4">
+        </div>
+        <div class="carousel-cell">
+            <img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5">
+        </div>
+    </div>
+
+    <!-- 引入Flickity JavaScript -->
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+</body>
+</html>
