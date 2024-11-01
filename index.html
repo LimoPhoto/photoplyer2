@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全屏图片左右滑动展示</title>
+    <title>全屏图片自由滚动展示</title>
     
     <!-- 引入Flickity CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
@@ -16,25 +16,34 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden; /* 禁止页面垂直滚动 */
+            overflow: hidden;
             background-color: #000;
+            flex-direction: column;
         }
 
-        /* 轮播容器样式 */
-        .carousel {
-            width: 100vw; /* 宽度占满视口 */
-            height: 100vh; /* 高度占满视口 */
+        /* 主轮播容器，设置全屏显示 */
+        .carousel-main {
+            width: 100vw;
+            height: 100vh;
         }
 
-        /* 轮播单元格样式，确保每张图片全屏显示 */
-        .carousel-cell {
+        /* 导航轮播样式 */
+        .carousel-nav {
+            width: 100vw;
+            height: 20vh;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        /* 轮播单元格样式 */
+        .carousel-cell, .carousel-cell-nav {
             width: 100vw;
             height: 100vh;
             position: relative;
             overflow: hidden;
         }
 
-        /* 图片样式，确保显示完整 */
+        /* 主轮播中的图片样式 */
         .carousel-cell img {
             position: absolute;
             top: 50%;
@@ -44,19 +53,25 @@
             max-height: 100%;
             width: auto;
             height: auto;
-            object-fit: contain; /* 保证图片显示完整 */
+            object-fit: contain;
         }
 
-        /* 自定义简洁箭头样式 */
+        /* 导航轮播中的图片样式 */
+        .carousel-cell-nav img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 自定义箭头样式 */
         .flickity-button {
-            background: none !important; /* 移除背景颜色 */
+            background: none !important;
             border: none !important;
             color: #fff !important;
-            font-size: 30px !important; /* 调整箭头大小 */
-            width: 50px !important;
-            height: 50px !important;
+            font-size: 20px !important;
             opacity: 0.7 !important;
-            transition: opacity 0.3s !important;
+            width: 30px !important;
+            height: 30px !important;
         }
 
         /* 隐藏箭头在手机端显示 */
@@ -68,8 +83,8 @@
     </style>
 </head>
 <body>
-    <!-- 轮播容器 -->
-    <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 5000, "pauseAutoPlayOnHover": false, "pageDots": false, "prevNextButtons": true, "cellAlign": "center", "contain": false }'>
+    <!-- 主轮播容器 -->
+    <div class="carousel-main" data-flickity='{ "freeScroll": true, "wrapAround": true, "fullscreen": true, "pageDots": false, "prevNextButtons": true, "contain": false }'>
         <div class="carousel-cell">
             <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
         </div>
@@ -83,6 +98,25 @@
             <img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4">
         </div>
         <div class="carousel-cell">
+            <img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5">
+        </div>
+    </div>
+
+    <!-- 导航轮播 -->
+    <div class="carousel-nav" data-flickity='{ "asNavFor": ".carousel-main", "contain": true, "pageDots": false, "prevNextButtons": false, "freeScroll": true }'>
+        <div class="carousel-cell-nav">
+            <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
+        </div>
+        <div class="carousel-cell-nav">
+            <img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2">
+        </div>
+        <div class="carousel-cell-nav">
+            <img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3">
+        </div>
+        <div class="carousel-cell-nav">
+            <img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4">
+        </div>
+        <div class="carousel-cell-nav">
             <img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5">
         </div>
     </div>
