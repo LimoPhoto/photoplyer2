@@ -17,7 +17,6 @@
             justify-content: center;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             background-color: #000;
             min-height: 100vh;
         }
@@ -30,10 +29,9 @@
 
         /* 导航轮播样式 */
         .carousel-nav {
-            width: 100vw;
+            width: 90vw; /* 让导航条稍微窄一些 */
             height: 15vh;
             margin-top: 20px; /* 主轮播和导航轮播间的距离 */
-            overflow: hidden;
             display: flex;
             align-items: center;
         }
@@ -59,11 +57,9 @@
 
         /* 导航轮播单元格样式 */
         .carousel-cell-nav {
-            width: 18%; /* 导航单元格较小 */
-            height: 90%;
+            width: 18%; /* 设置导航条每个单元格的宽度 */
             margin-right: 5px; /* 图片之间的间隙 */
             overflow: hidden;
-            transition: transform 0.3s ease; /* 添加平滑的缩放效果 */
             border: 2px solid transparent; /* 边框用于高亮 */
             box-sizing: border-box;
         }
@@ -109,7 +105,6 @@
             cellAlign: 'center',
             contain: true,
             wrapAround: true,
-            freeScroll: true,
             pageDots: false
         });
 
