@@ -34,15 +34,17 @@
             overflow: hidden;
         }
 
-        /* 图片样式，确保填满整个单元格 */
+        /* 图片样式，确保显示完整 */
         .carousel-cell img {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* 保证图片显示完整 */
         }
 
         /* 自定义简洁箭头样式 */
