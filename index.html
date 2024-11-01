@@ -84,7 +84,7 @@
 </head>
 <body>
     <!-- 主轮播容器 -->
-    <div class="carousel-main" data-flickity='{ "freeScroll": true, "wrapAround": true, "fullscreen": true, "pageDots": false, "prevNextButtons": true, "contain": false }'>
+    <div class="carousel-main">
         <div class="carousel-cell">
             <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
         </div>
@@ -103,7 +103,7 @@
     </div>
 
     <!-- 导航轮播 -->
-    <div class="carousel-nav" data-flickity='{ "asNavFor": ".carousel-main", "contain": true, "pageDots": false, "prevNextButtons": false, "freeScroll": true }'>
+    <div class="carousel-nav">
         <div class="carousel-cell-nav">
             <img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1">
         </div>
@@ -123,5 +123,25 @@
 
     <!-- 引入Flickity JavaScript -->
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script>
+        // 初始化主轮播
+        const mainCarousel = new Flickity('.carousel-main', {
+            wrapAround: true,
+            freeScroll: true,
+            fullscreen: true,
+            pageDots: false,
+            prevNextButtons: true,
+            contain: false
+        });
+
+        // 初始化导航轮播，并将其配置为主轮播的导航
+        const navCarousel = new Flickity('.carousel-nav', {
+            asNavFor: '.carousel-main', // 指定主轮播
+            contain: true,
+            pageDots: false,
+            prevNextButtons: false,
+            freeScroll: true
+        });
+    </script>
 </body>
 </html>
