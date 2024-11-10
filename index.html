@@ -9,12 +9,13 @@
   <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css">
   
   <style>
-      /* 隐藏不需要的元素，只显示播放按钮和进度条 */
+      /* 极简音乐播放器样式 */
       .aplayer .aplayer-body, 
       .aplayer .aplayer-info, 
       .aplayer .aplayer-time, 
       .aplayer .aplayer-volume,
-      .aplayer .aplayer-controller-mask {
+      .aplayer .aplayer-lrc,
+      .aplayer .aplayer-music {
           display: none !important;
       }
       .aplayer .aplayer-buttons {
@@ -24,17 +25,13 @@
       }
       .aplayer .aplayer-play {
           font-size: 24px;
+          margin-right: 10px;
       }
       .aplayer .aplayer-bar {
-          width: 100%;
+          width: 80%;
           margin-top: 10px;
           height: 4px;
           background-color: #ddd;
-      }
-      .aplayer .aplayer-bar-wrap {
-          display: flex;
-          align-items: center;
-          justify-content: center;
       }
       .aplayer .aplayer-bar-inner {
           height: 100%;
