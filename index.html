@@ -10,7 +10,17 @@
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
   
   <style>
-      /* 隐藏播放器中不需要的元素，只保留播放按钮和进度条 */
+      /* 确保 body 显示，并居中内容 */
+      body {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          margin: 0;
+          background-color: #f0f0f0;
+          flex-direction: column;
+      }
+      /* 极简音乐播放器样式 */
       .aplayer .aplayer-body, 
       .aplayer .aplayer-info, 
       .aplayer .aplayer-time, 
@@ -18,15 +28,15 @@
       .aplayer .aplayer-lrc,
       .aplayer .aplayer-icon,
       .aplayer .aplayer-controller-mask {
-          display: none !important; /* 将这些元素隐藏，确保播放器简洁 */
+          display: none !important;
       }
       .aplayer {
-          display: flex; /* 使用 flex 布局来对齐播放按钮和进度条 */
+          display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
-          max-width: 400px; /* 设置播放器最大宽度，便于布局 */
-          margin: 20px auto; /* 使播放器在页面居中 */
+          max-width: 400px;
+          margin: 20px auto;
       }
       .aplayer .aplayer-buttons {
           display: flex;
@@ -34,18 +44,18 @@
           align-items: center;
       }
       .aplayer .aplayer-play {
-          font-size: 24px; /* 设置播放按钮的大小 */
-          margin-right: 10px; /* 播放按钮与进度条之间的间距 */
+          font-size: 24px;
+          margin-right: 10px;
       }
       .aplayer .aplayer-bar {
-          width: 80%; /* 进度条宽度 */
-          margin-top: 10px; /* 顶部留出一些间距 */
-          height: 4px; /* 设置进度条的高度 */
-          background-color: #ddd; /* 进度条的背景颜色 */
+          width: 80%;
+          margin-top: 10px;
+          height: 4px;
+          background-color: #ddd;
       }
       .aplayer .aplayer-bar-inner {
-          height: 100%; /* 使进度条内部的播放进度条充满整个高度 */
-          background-color: #333; /* 播放进度条颜色 */
+          height: 100%;
+          background-color: #333;
       }
   </style>
 </head>
@@ -56,18 +66,18 @@
   <script>
     // 初始化极简音乐播放器
     const ap = new APlayer({
-      container: document.getElementById('aplayer'), // 指定播放器的容器
-      autoplay: false, // 禁用自动播放，用户手动点击播放
-      theme: '#b7daff', // 设置播放器的主题颜色
-      loop: 'all', // 设置为全部循环播放，单曲播放结束后自动循环
-      preload: 'auto', // 自动预加载音频文件
-      volume: 0.7, // 音量预设为 70%
+      container: document.getElementById('aplayer'),
+      autoplay: false,
+      theme: '#b7daff',
+      loop: 'all',
+      preload: 'auto',
+      volume: 0.7,
       audio: [
         {
-          name: '天边一朵云', // 歌曲名称
-          artist: '声音碎片乐队', // 艺术家名称
-          url: 'https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3', // 音频文件的URL
-          cover: 'https://limophoto.github.io/musicplayer/offline-5246548.jpg' // 音频封面图的URL
+          name: '天边一朵云',
+          artist: '声音碎片乐队',
+          url: 'https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3',
+          cover: 'https://limophoto.github.io/musicplayer/offline-5246548.jpg'
         }
       ]
     });
