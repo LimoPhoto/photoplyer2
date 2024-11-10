@@ -3,75 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>极简音乐播放器</title>
-  
-  <!-- 引入 APlayer CSS 和 JavaScript -->
+  <title>音乐播放器</title>
+  <!-- 引入 APlayer 库 -->
   <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css">
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
-  
-  <style>
-      /* 确保 body 显示，并居中内容 */
-      body {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 100vh;
-          margin: 0;
-          background-color: #f0f0f0;
-          flex-direction: column;
-      }
-      /* 极简音乐播放器样式 */
-      .aplayer .aplayer-body, 
-      .aplayer .aplayer-info, 
-      .aplayer .aplayer-time, 
-      .aplayer .aplayer-volume,
-      .aplayer .aplayer-lrc,
-      .aplayer .aplayer-icon,
-      .aplayer .aplayer-controller-mask {
-          display: none !important;
-      }
-      .aplayer {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          max-width: 400px;
-          margin: 20px auto;
-      }
-      .aplayer .aplayer-buttons {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-      }
-      .aplayer .aplayer-play {
-          font-size: 24px;
-          margin-right: 10px;
-      }
-      .aplayer .aplayer-bar {
-          width: 80%;
-          margin-top: 10px;
-          height: 4px;
-          background-color: #ddd;
-      }
-      .aplayer .aplayer-bar-inner {
-          height: 100%;
-          background-color: #333;
-      }
-  </style>
 </head>
 <body>
   <!-- 音乐播放器容器 -->
   <div id="aplayer"></div>
 
   <script>
-    // 初始化极简音乐播放器
+    // 初始化音乐播放器
     const ap = new APlayer({
       container: document.getElementById('aplayer'),
-      autoplay: false,
+      autoplay: true, // 是否自动播放
       theme: '#b7daff',
-      loop: 'all',
-      preload: 'auto',
-      volume: 0.7,
+      loop: 'all', // 循环播放
+      preload: 'auto', // 音乐预加载
+      volume: 0.7, // 音量
       audio: [
         {
           name: '天边一朵云',
@@ -84,3 +33,5 @@
   </script>
 </body>
 </html>
+
+请你重新在这组代码上更改，让音乐播放器可以正常播放的同时，在页面上只保留播放按钮和进度条供使用者交互。
