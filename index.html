@@ -5,18 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>极简音乐播放器</title>
   
-  <!-- 引入 APlayer CSS -->
+  <!-- 引入 APlayer CSS 和 JavaScript -->
   <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css">
+  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
   
   <style>
-      /* 极简音乐播放器样式 */
-      .aplayer .aplayer-body, 
-      .aplayer .aplayer-info, 
-      .aplayer .aplayer-time, 
+      /* 隐藏不需要的元素，仅保留播放按钮和进度条 */
+      .aplayer .aplayer-body,
+      .aplayer .aplayer-info,
+      .aplayer .aplayer-time,
       .aplayer .aplayer-volume,
       .aplayer .aplayer-lrc,
-      .aplayer .aplayer-music {
+      .aplayer .aplayer-icon,
+      .aplayer .aplayer-controller-mask {
           display: none !important;
+      }
+      .aplayer {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 400px;
+          margin: 20px auto;
       }
       .aplayer .aplayer-buttons {
           display: flex;
@@ -40,29 +50,27 @@
   </style>
 </head>
 <body>
-    <!-- 音乐播放器容器 -->
-    <div id="aplayer"></div>
+  <!-- 音乐播放器容器 -->
+  <div id="aplayer"></div>
 
-    <!-- 引入 APlayer JS -->
-    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
-    <script>
-        // 初始化极简音乐播放器
-        const ap = new APlayer({
-            container: document.getElementById('aplayer'),
-            autoplay: false,
-            theme: '#b7daff',
-            loop: 'all',
-            preload: 'auto',
-            volume: 0.7,
-            audio: [
-              {
-                name: '天边一朵云',
-                artist: '声音碎片乐队',
-                url: 'https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3',
-                cover: 'https://limophoto.github.io/musicplayer/offline-5246548.jpg'
-              }
-            ]
-        });
-    </script>
+  <script>
+    // 初始化极简音乐播放器
+    const ap = new APlayer({
+      container: document.getElementById('aplayer'),
+      autoplay: false,
+      theme: '#b7daff',
+      loop: 'all',
+      preload: 'auto',
+      volume: 0.7,
+      audio: [
+        {
+          name: '天边一朵云',
+          artist: '声音碎片乐队',
+          url: 'https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3',
+          cover: 'https://limophoto.github.io/musicplayer/offline-5246548.jpg'
+        }
+      ]
+    });
+  </script>
 </body>
 </html>
