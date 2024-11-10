@@ -1,120 +1,70 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片轮播展示</title>
-    
-    <!-- 引入Flickity CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-    
-    <style>
-        /* 页面主体样式 */
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>极简音乐播放器</title>
 
-        /* 主轮播全屏样式 */
-        .carousel-main {
-            width: 100vw;
-            height: 80vh;
-        }
-
-        /* 导航轮播样式 */
-        .carousel-nav {
-            width: 90vw; /* 让导航条稍微窄一些 */
-            height: 15vh;
-            margin-top: 20px; /* 主轮播和导航轮播间的距离 */
-            display: flex;
-            align-items: center;
-        }
-
-        /* 主轮播单元格样式 */
-        .carousel-cell {
-            width: 100vw;
-            height: 80vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 主轮播图片样式 */
-        .carousel-cell img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        /* 导航轮播单元格样式 */
-        .carousel-cell-nav {
-            width: 18%; /* 设置导航条每个单元格的宽度 */
-            margin-right: 5px; /* 图片之间的间隙 */
-            overflow: hidden;
-            border: 2px solid transparent; /* 边框用于高亮 */
-            box-sizing: border-box;
-        }
-
-        /* 高亮当前选中的导航图片 */
-        .carousel-cell-nav.is-nav-selected {
-            border-color: #ff0; /* 高亮边框颜色 */
-            transform: scale(1.1); /* 放大当前选中图片 */
-        }
-
-        /* 导航轮播中的图片 */
-        .carousel-cell-nav img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* 确保图片完整显示 */
-        }
-    </style>
+  <!-- 引入 APlayer CSS -->
+  <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css">
+  
+  <style>
+      /* 隐藏不需要的元素，只显示播放按钮和进度条 */
+      .aplayer .aplayer-body, 
+      .aplayer .aplayer-info, 
+      .aplayer .aplayer-time, 
+      .aplayer .aplayer-volume,
+      .aplayer .aplayer-controller-mask {
+          display: none !important;
+      }
+      .aplayer .aplayer-buttons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+      .aplayer .aplayer-play {
+          font-size: 24px;
+      }
+      .aplayer .aplayer-bar {
+          width: 100%;
+          margin-top: 10px;
+          height: 4px;
+          background-color: #ddd;
+      }
+      .aplayer .aplayer-bar-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .aplayer .aplayer-bar-inner {
+          height: 100%;
+          background-color: #333;
+      }
+  </style>
 </head>
 <body>
-    <!-- 主轮播 -->
-    <div class="carousel-main">
-        <div class="carousel-cell"><img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1"></div>
-        <div class="carousel-cell"><img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2"></div>
-        <div class="carousel-cell"><img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3"></div>
-        <div class="carousel-cell"><img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4"></div>
-        <div class="carousel-cell"><img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5"></div>
-    </div>
+    <!-- 音乐播放器容器 -->
+    <div id="aplayer"></div>
 
-    <!-- 导航轮播 -->
-    <div class="carousel-nav">
-        <div class="carousel-cell-nav"><img src="https://i.imgur.com/IXf2WmH.jpg" alt="Image 1"></div>
-        <div class="carousel-cell-nav"><img src="https://i.imgur.com/ofqYSsO.jpg" alt="Image 2"></div>
-        <div class="carousel-cell-nav"><img src="https://i.imgur.com/oPpNgLZ.jpg" alt="Image 3"></div>
-        <div class="carousel-cell-nav"><img src="https://i.imgur.com/yZOPzHV.jpg" alt="Image 4"></div>
-        <div class="carousel-cell-nav"><img src="https://i.imgur.com/UTUz75t.jpg" alt="Image 5"></div>
-    </div>
-
-    <!-- 引入Flickity JavaScript -->
-    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <!-- 引入 APlayer JS -->
+    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
     <script>
-        // 初始化主轮播
-        const mainCarousel = new Flickity('.carousel-main', {
-            cellAlign: 'center',
-            contain: true,
-            wrapAround: true,
-            pageDots: false
-        });
-
-        // 初始化导航轮播并关联至主轮播
-        const navCarousel = new Flickity('.carousel-nav', {
-            asNavFor: '.carousel-main',  // 关联到主轮播
-            contain: true,
-            pageDots: false,
-            prevNextButtons: false,
-            freeScroll: true
+        // 初始化极简音乐播放器
+        const ap = new APlayer({
+            container: document.getElementById('aplayer'),
+            autoplay: false,
+            theme: '#b7daff',
+            loop: 'all',
+            preload: 'auto',
+            volume: 0.7,
+            audio: [
+              {
+                name: '天边一朵云',
+                artist: '声音碎片乐队',
+                url: 'https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3',
+                cover: 'https://limophoto.github.io/musicplayer/offline-5246548.jpg'
+              }
+            ]
         });
     </script>
 </body>
