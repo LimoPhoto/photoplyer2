@@ -3,42 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>极简音乐播放器</title>
-  <!-- 引入 APlayer 库 -->
-  <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css">
-  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
-
+  <title>HTML5 极简音乐播放器</title>
   <style>
-      /* 隐藏封面图、作者和循环按钮 */
-      .aplayer-pic,               /* 封面图 */
-      .aplayer-author,            /* 作者信息 */
-      .aplayer-icon.aplayer-icon-loop { /* 循环按钮 */
-          display: none !important;
-      }
+    .player { display: flex; align-items: center; }
+    .play-btn { font-size: 24px; cursor: pointer; margin-right: 10px; }
+    .progress { width: 100%; height: 5px; background: #ddd; position: relative; }
+    .progress-bar { width: 0%; height: 100%; background: #333; position: absolute; top: 0; left: 0; }
   </style>
 </head>
 <body>
-  <!-- 音乐播放器容器 -->
-  <div id="aplayer"></div>
-
+  <div class="player">
+    <div class="play-btn" onclick="togglePlay()">▶️</div>
+    <div class="progress">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+  </div>
+  <audio id="audio" src="https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3" preload="auto"></audio>
+  
   <script>
-    // 初始化音乐播放器
-    const ap = new APlayer({
-      container: document.getElementById('aplayer'),
-      autoplay: true, // 是否自动播放
-      theme: '#b7daff',
-      loop: 'all', // 循环播放
-      preload: 'auto', // 音乐预加载
-      volume: 0.7, // 音量
-      audio: [
-        {
-          name: '天边一朵云',
-          artist: '声音碎片乐队',
-          url: 'https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3',
-          cover: 'https://limophoto.github.io/musicplayer/offline-5246548.jpg'
-        }
-      ]
-    });
+    const audio = document.getElementById('audio');
+    const playBtn = document.querySelector('.play-btn');
+    const progressBar = document.getElementById('progress-bar');
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸️';
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶️';
+      }
+    }
+
+    audio.ontimeupdate = () => {
+      const progress = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = progress + '%';
+    };
   </script>
 </body>
 </html>
