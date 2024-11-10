@@ -3,10 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>音乐播放器</title>
+  <title>极简音乐播放器</title>
   <!-- 引入 APlayer 库 -->
   <link rel="stylesheet" href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css">
   <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js"></script>
+
+  <style>
+      /* 隐藏封面图、作者和循环按钮 */
+      .aplayer-pic,               /* 封面图 */
+      .aplayer-author,            /* 作者信息 */
+      .aplayer-icon.aplayer-icon-loop { /* 循环按钮 */
+          display: none !important;
+      }
+  </style>
 </head>
 <body>
   <!-- 音乐播放器容器 -->
