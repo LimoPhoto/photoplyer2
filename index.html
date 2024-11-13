@@ -1,57 +1,240 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML5 极简音乐播放器</title>
-  <style>
-    .player { display: flex; align-items: center; }
-    .play-btn { cursor: pointer; margin-right: 10px; width: 24px; height: 24px; }
-    .progress { width: 100%; height: 5px; background: #ddd; position: relative; }
-    .progress-bar { width: 0%; height: 100%; background: #333; position: absolute; top: 0; left: 0; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片轮播展示</title>
+    
+    <!-- 引入Flickity CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 10px;
+            background-color: transparent;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            max-height: 100vh;
+            margin: 0 auto;
+            display: flex;           /* 使用 flex 布局 */
+            align-items: center;      /* 垂直居中 */
+            justify-content: center;  /* 水平居中 */
+        }
+
+        .carousel {
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .carousel-cell {
+            width: 100%;
+            height: auto;
+            padding-bottom: 56.25%;
+            position: relative;
+            margin-right: 10px;
+            background-color: transparent;
+        }
+
+        .carousel-cell img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        @media (max-width: 600px) {
+            .carousel-cell {
+                padding-bottom: 100%;
+            }
+        }
+
+        .flickity-button {
+            background: none !important;
+            border: none !important;
+            color: #333 !important;
+            font-size: 20px !important;
+            width: 30px !important;
+            height: 30px !important;
+            opacity: 0 !important;
+            transition: opacity 0.3s !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        .flickity-button:focus,
+        .flickity-button:active {
+            background: none !important;
+            box-shadow: none !important;
+        }
+
+        .carousel:hover .flickity-button {
+            opacity: 0.5 !important;
+        }
+
+        .progress-bar {
+            width: 35%;
+            height: 2px;
+            background-color: #ccc;
+            overflow: hidden;
+            margin-top: 30px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .progress-bar .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #333;
+            transition: width 0.1s;
+        }
+
+        @media (max-width: 768px) {
+            .flickity-button {
+                display: none !important;
+            }
+        }
+
+        /* 全屏图标样式 */
+        .fullscreen-icon {
+            position: absolute;
+            bottom: 0px;
+            right: 10px;
+            z-index: 1000;
+            padding: 5px;
+            background-color: transparent;
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+            opacity: 0.7 ;
+        }
+
+        .fullscreen-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .fullscreen-icon:hover {
+            opacity: 1;
+        }
+
+        /* 鼠标不活动时隐藏图标 */
+        .hide-icon {
+            opacity: 0 !important;
+        }
+
+        /* 全屏模式下的样式 */
+        .fullscreen .carousel-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center; /* 全屏时垂直居中 */
+            justify-content: center; /* 水平居中 */
+        }
+
+        /* 隐藏移动端的全屏图标 */
+        @media (max-width: 768px) {
+            .fullscreen-icon {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="player">
-    <div class="play-btn" onclick="togglePlay()">
-      <!-- SVG 播放按钮 -->
-      <svg id="play-icon" viewBox="0 0 24 24" width="24" height="24" style="display: block;">
-        <polygon points="5,3 19,12 5,21" fill="#333" />
-      </svg>
-      <!-- SVG 暂停按钮 -->
-      <svg id="pause-icon" viewBox="0 0 24 24" width="24" height="24" style="display: none;">
-        <rect x="5" y="3" width="4" height="18" fill="#333" />
-        <rect x="15" y="3" width="4" height="18" fill="#333" />
-      </svg>
+    <!-- 轮播容器 -->
+    <div class="carousel-container" id="carouselContainer">
+        <button class="fullscreen-icon" id="fullscreenButton" onclick="toggleFullScreen()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 6h5V4H4v7h2V6zm12 0v5h2V4h-7v2h5zM6 13H4v7h7v-2H6v-5zm12 5h-5v2h7v-7h-2v5z"/>
+            </svg>
+        </button>
+        <div class="carousel" id="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000, "pauseAutoPlayOnHover": true, "pageDots": false, "prevNextButtons": true }'>
+            <!-- 动态加载图片 -->
+        </div>
     </div>
-    <div class="progress">
-      <div class="progress-bar" id="progress-bar"></div>
-    </div>
-  </div>
-  <audio id="audio" src="https://limophoto.github.io/musicplayer/%E5%A3%B0%E9%9F%B3%E7%A2%8E%E7%89%87%E4%B9%90%E9%98%9F%20-%20%E5%A4%A9%E8%BE%B9%E4%B8%80%E6%9C%B5%E4%BA%91.mp3" preload="auto"></audio>
-  
-  <script>
-    const audio = document.getElementById('audio');
-    const playIcon = document.getElementById('play-icon');
-    const pauseIcon = document.getElementById('pause-icon');
-    const progressBar = document.getElementById('progress-bar');
 
-    function togglePlay() {
-      if (audio.paused) {
-        audio.play();
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-      } else {
-        audio.pause();
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-      }
-    }
+    <!-- 引入Flickity JavaScript -->
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script>
+        async function loadImgurImages() {
+            const postId = "BLEZ1hm";
+            const apiUrl = `https://api.imgur.com/3/album/${postId}/images`;
 
-    audio.ontimeupdate = () => {
-      const progress = (audio.currentTime / audio.duration) * 100;
-      progressBar.style.width = progress + '%';
-    };
-  </script>
+            try {
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        Authorization: 'Client-ID YOUR_CLIENT_ID' // 替换为你的 Imgur API Client ID
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    alert('无法加载图片，请检查链接是否正确！');
+                    return;
+                }
+
+                const images = data.data;
+                const carousel = document.getElementById('carousel');
+                carousel.innerHTML = '';
+
+                images.forEach(image => {
+                    const cell = document.createElement('div');
+                    cell.className = 'carousel-cell';
+                    cell.innerHTML = `<img src="${image.link}" alt="${image.description || 'Image'}">`;
+                    carousel.appendChild(cell);
+                });
+
+                // 重新初始化 Flickity
+                new Flickity(carousel, {
+                    wrapAround: true,
+                    autoPlay: 3000,
+                    pauseAutoPlayOnHover: true,
+                    pageDots: false,
+                    prevNextButtons: true
+                });
+
+            } catch (error) {
+                console.error('Error loading Imgur images:', error);
+                alert('加载图片时出错，请稍后再试！');
+            }
+        }
+
+        // 全屏功能
+        const fullscreenButton = document.getElementById("fullscreenButton");
+        const carouselContainer = document.getElementById("carouselContainer");
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                carouselContainer.requestFullscreen().catch(err => {
+                    alert(`全屏失败: ${err.message}`);
+                });
+                carouselContainer.classList.add("fullscreen");
+            } else {
+                document.exitFullscreen();
+                carouselContainer.classList.remove("fullscreen");
+            }
+        }
+
+        // 初始化加载图片
+        loadImgurImages();
+    </script>
 </body>
 </html>
